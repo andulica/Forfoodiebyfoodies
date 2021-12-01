@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.devexpert.forfoodiesbyfoodies.services.FireStore;
 import com.devexpert.forfoodiesbyfoodies.services.CustomSharedPreference;
 import com.devexpert.forfoodiesbyfoodies.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 
@@ -34,6 +36,7 @@ public class DashBoardActivity extends AppCompatActivity {
     private ImageView imageView;
     private User userData;
     private Menu menu;
+    private CustomSharedPreference yourPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class DashBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dash_board);
 
         //get userId from sharedPreference
-        CustomSharedPreference yourPreference = CustomSharedPreference.getInstance(getApplicationContext());
+        yourPreference = CustomSharedPreference.getInstance(getApplicationContext());
         String userId = yourPreference.getData(Constants.userId);
 
         //gets user data from firestore
@@ -101,6 +104,16 @@ public class DashBoardActivity extends AppCompatActivity {
                 frag = new AddUserByAdminFragment();
             } else if (itemId == R.id.channelFragment_id) {
                 frag = new ChatForumFragment();
+            } else if (itemId == R.id.logout_id) {
+                frag = new RestaurantsFragment();
+                FirebaseAuth.getInstance().signOut();
+                Intent logout_intent = new Intent(getApplicationContext(), LoginActivity.class);
+                logout_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                logout_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                logout_intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(logout_intent);
+                yourPreference.removeAllData();
+                finish();
             } else {
                 frag = new RestaurantsFragment();
             }

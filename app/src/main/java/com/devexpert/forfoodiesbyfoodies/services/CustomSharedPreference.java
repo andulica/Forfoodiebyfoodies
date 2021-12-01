@@ -30,4 +30,8 @@ public class CustomSharedPreference {
         }
         return "";
     }
+    public void removeAllData(){
+        SharedPreferences.Editor prefsEditor = sharedPreferences.edit();
+        prefsEditor.clear().commit();
+    }
 }

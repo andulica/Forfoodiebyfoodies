@@ -62,5 +62,6 @@
     <string name="lbl_forgot_password">Forget Password</string>
     <string name="forgot_password_msg">To reset password, enter your emial, press the button anc check mail to follow instructions.</string>
     <string name="btn_reset_password">Reset Password</string>
+    <string name="logout">Logout</string>
 
 </resources>
